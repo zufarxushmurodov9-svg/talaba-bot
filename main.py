@@ -205,7 +205,8 @@ async def hajm_set(c: CallbackQuery, state: FSMContext):
     is_free = (u[3]==0)
     price = 0 if is_free else get_price(hajm)
     await state.update_data(hajm=hajm, price=price, is_free=is_free)
-    txt = f"📋 Tekshiring:\n\nIsh: {data['work_type']}\nFan: {data['fan']}\nMavzu: {data['mavzu']}\nHajm: {hajm}\nNarx: {'BEPUL 🎁' if is_free else f'{price} so\\'m'}\nBalansingiz: {u[2]} so'm"
+    price_text = "BEPUL" if is_free else str(price) + " som"
+    txt = "Tekshiring:\n\nIsh: " + str(data.get("work_type")) + "\nFan: " + str(data.get("fan")) + "\nMavzu: " + str(data.get("mavzu")) + "\nHajm: " + str(hajm) + "\nNarx: " + price_text + "\nBalansingiz: " + str(u[2]) + " som"
     kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="✅ Tasdiqlash, yozishni boshlash", callback_data="confirm_yes")]])
     await c.message.answer(txt, reply_markup=kb)
     await c.answer()
